@@ -1,0 +1,163 @@
+<div class="container-fluid">
+  <h1 class="mt-4">TẠO MỚI LỊCH TIÊM CHỦNG</h1>
+
+  <div class="container col-9 mt-5">
+    <form [formGroup]="formGroup" (ngSubmit)="submitForm()" novalidate>
+      <div class="row">
+        <div class="col-sm">
+          <input type="hidden" formControlName="vaccinationId">
+          <div class="form-group row mb-4">
+            <label class="col-sm-3 col-form-label">Thời gian : <span>*</span></label>
+            <div class="col-sm-9">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">Từ</div>
+                </div>
+                <input formControlName="startTime" type="time" class="form-control" required>
+              </div>
+              <div class="error-place" *ngFor="let validation of validate_message.startTime">
+                <div>
+                  <small class="text-danger"
+                         *ngIf="formGroup.get('startTime').hasError(validation.type) && (formGroup.get('startTime').touched )">
+                    {{validation.message}}</small>
+                </div>
+                <div><small *ngIf="formGroup.errors?.timeValid" class="text-danger">
+                  {{messageTime}}</small></div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row mb-4">
+            <label class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">Đến</div>
+                </div>
+                <input formControlName="endTime" type="time" class="form-control" required>
+              </div>
+              <div class="error-place" *ngFor="let validation of validate_message.endTime">
+                <div><small class="text-danger"
+                            *ngIf="formGroup.get('endTime').hasError(validation.type) && (formGroup.get('endTime').touched )">
+                  {{validation.message}}</small></div>
+                <div><small *ngIf="formGroup.errors?.timeValid" class="text-danger">
+                  {{messageTime}}</small></div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row mb-4">
+            <label class="col-sm-3 col-form-label">Ngày tiêm : <span>*</span></label>
+            <div class="col-sm-9">
+              <input formControlName="date" type="date" class="form-control" required>
+              <div class="error-place" *ngFor="let validation of validate_message.date">
+                <small class="text-danger"
+                       *ngIf="formGroup.get('date').hasError(validation.type) &&
+                       (formGroup.get('date').touched || formGroup.get('date').pristine || formGroup.get('date'))">
+                  {{validation.message}}</small>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row mb-4">
+            <label class="col-sm-3 col-form-label">Số mũi tiêm : <span>*</span></label>
+            <div class="col-sm-9">
+              <input class="form-control" disabled *ngIf="valueTimes; else noValueTimes" [value]="valueTimes">
+              <ng-template #noValueTimes>
+                <input class="form-control" disabled>
+              </ng-template>
+            </div>
+          </div>
+          <div class="form-group row mb-4">
+            <label class="col-sm-3 col-form-label">Khoảng cách giữa 2 lần ( {{currentDuration}}) : <span>*</span></label>
+            <div class="col-sm-9">
+              <input class="form-control" disabled *ngIf="valueDuration; else noValueDuration" [value]="valueDuration">
+              <ng-template #noValueDuration>
+                <input class="form-control" disabled>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm">
+          <div class="form-group row mb-4">
+            <label class="col-sm-3 col-form-label">Ghi chú : <span>*</span></label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" formControlName="description" required>
+              <div class="error-place" *ngFor="let validation of validate_message.description">
+                <small class="text-danger"
+                       *ngIf="formGroup.get('description').hasError(validation.type) && (formGroup.get('description').touched )">
+                  {{validation.message}}</small>
+              </div>
+            </div>
+          </div>
+<!--          <div class="form-group row mb-4">-->
+<!--            <label class="col-sm-3 col-form-label">Địa điểm : <span>*</span></label>-->
+<!--            <div class="col-sm-9">-->
+<!--              <select formControlName="locationId" class="form-control" required>-->
+<!--                <option *ngFor="let location of locationList" [value]="location.locationId">-->
+<!--                  {{location.name}}-->
+<!--                </option>-->
+<!--              </select>-->
+<!--              <div class="error-place" *ngFor="let validation of validate_message.locationId">-->
+<!--                <small class="text-danger"-->
+<!--                       *ngIf="formGroup.get('locationId').hasError(validation.type) && (formGroup.get('locationId').touched )">-->
+<!--                  {{validation.message}}</small>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+          <div class="form-group row mb-4">
+            <label class="col-sm-3 col-form-label">Tên Vắc-xin : <span>*</span></label>
+            <div class="col-sm-9">
+              <select formControlName="vaccineId" class="form-control" (click)="getValue($event.target.value)">
+                <option *ngFor="let vaccine of vaccineList" [value]="vaccine.vaccineId">
+                  {{vaccine.name}}
+                </option>
+              </select>
+              <div class="error-place" *ngFor="let validation of validate_message.vaccineId">
+                <small class="text-danger"
+                       *ngIf="formGroup.get('vaccineId').hasError(validation.type) && (formGroup.get('vaccineId').touched )">
+                  {{validation.message}}</small>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row mb-4">
+            <label class="col-sm-3 col-form-label">Loại Vắc-xin : <span>*</span></label>
+            <div class="col-sm-9">
+              <input class="form-control" *ngIf="valueNameVaccine; else noValueNameVaccine" [value]="valueNameVaccine"
+                     disabled>
+              <ng-template #noValueNameVaccine>
+                <input class="form-control" disabled>
+              </ng-template>
+            </div>
+          </div>
+          <div class="form-group row mb-4">
+            <label class="col-sm-3 col-form-label">Độ tuổi tiêm : <span>*</span></label>
+            <div class="col-sm-9">
+              <input class="form-control" disabled *ngIf="valueAge; else noValueAge" [value]="valueAge">
+              <ng-template #noValueAge>
+                <input class="form-control" disabled>
+              </ng-template>
+            </div>
+          </div>
+          <div class="form-group row mb-4">
+            <label class="col-sm-3 col-form-label">Trạng thái : <span>*</span></label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" [value]="statusString" disabled>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm" style="text-align: right">
+          <button type="submit" class="btn btn-success" [disabled]="formGroup.invalid">Tạo mới
+            lịch tiêm
+          </button>
+        </div>
+        <div class="col-sm">
+          <a routerLink="/periodical-vaccination-manager/list">
+            <button class="btn btn-secondary" type="button">Hủy</button>
+          </a>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>

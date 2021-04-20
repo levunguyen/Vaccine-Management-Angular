@@ -1,0 +1,200 @@
+
+<div >
+  <h2 class="text-center mt-4 mb-4">Đăng ký</h2>
+  <div style="margin-left: 18%" class="container row g-3" id="createPatient">
+    <div class="col-2"></div>
+    <div class="col-8">
+      <form [formGroup]="patientForm" (ngSubmit)="onSubmit()">
+
+        <div class="mb-3 row">
+          <label for="exampleInputName" class="col-sm-3 col-form-label">
+            <div class="ml-4">
+              Mã sổ tiêm chủng<span
+              class="*">*</span>
+            </div>
+          </label>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" formControlName="book_id"
+                   placeholder="Mã sổ tiêm chủng">
+            <div class="text-danger" *ngFor="let validation of validation_messages.book_id">
+              <div class="error-message"
+                   *ngIf="patientForm.get('book_id').hasError(validation.type) && (patientForm.get('book_id').dirty || patientForm.get('book_id').touched)">
+                {{validation.message}}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3 row">
+          <label for="exampleInputName" class="col-sm-3 col-form-label">
+            <div class="ml-4">
+              Họ và tên<span
+              class="*">*</span>
+            </div>
+          </label>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" id="exampleInputName" formControlName="name"
+                   placeholder="Họ và tên">
+            <div class="text-danger" *ngFor="let validation of validation_messages.name">
+              <div class="error-message"
+                   *ngIf="patientForm.get('name').hasError(validation.type) && (patientForm.get('name').dirty || patientForm.get('name').touched)">
+                {{validation.message}}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3 row">
+          <label for="exampleInputName" class="col-sm-3 col-form-label">
+            <div class="ml-4">
+              Giới tính<span class="*">*</span>
+            </div>
+          </label>
+          <div class="col-sm-6">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="gender" id="flexRadioDefault1" value="Nam"
+                     formControlName="gender">
+              <label class="form-check-label" for="flexRadioDefault1">Nam</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="gender" id="flexRadioDefault2" value="Nữ"
+                     formControlName="gender">
+              <label class="form-check-label" for="flexRadioDefault2">Nữ</label>
+            </div>
+            <div class="text-danger" *ngFor="let validation of validation_messages.gender">
+              <div class="error-message"
+                   *ngIf="patientForm.get('gender').hasError(validation.type) && (patientForm.get('gender').dirty || patientForm.get('gender').touched)">
+                {{validation.message}}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3 row">
+          <label class="col-sm-3 col-form-label">
+            <div class="ml-4">
+              Ngày sinh<span class="*">*</span>
+            </div>
+          </label>
+          <div class="col-sm-6">
+            <input type="date" class="form-control" formControlName="dateOfBirth">
+            <div class="text-danger" *ngFor="let validation of validation_messages.dateOfBirth">
+              <div class="error-message"
+                   *ngIf="patientForm.get('dateOfBirth').hasError(validation.type) && (patientForm.get('dateOfBirth').dirty || patientForm.get('dateOfBirth').touched)">
+                {{validation.message}}</div>
+              <span *ngIf="patientForm.get('dateOfBirth').hasError('checkAge')">Tuổi từ 3 tháng đến 90 tuổi</span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="mb-3 row">
+          <label for="exampleInputGuardian" class="col-sm-3 col-form-label">
+            <div class="ml-4">
+              Người giám hộ
+            </div>
+
+          </label>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" id="exampleInputGuardian" formControlName="guardian"
+                   placeholder="Người giám hộ">
+            <div class="text-danger" *ngFor="let validation of validation_messages.guardian">
+              <div class="error-message"
+                   *ngIf="patientForm.get('guardian').hasError(validation.type) && (patientForm.get('guardian').dirty || patientForm.get('guardian').touched)">
+                {{validation.message}}</div>
+            </div>
+            <div class="text-danger"
+                 *ngIf="patientForm.hasError('checkGuardian') && (patientForm.get('guardian').dirty || patientForm.get('guardian').touched)">
+              Dưới 18 tuổi phải có người giám hộ .
+            </div>
+          </div>
+
+        </div>
+
+        <div class="mb-3 row">
+          <label for="exampleInputAddress" class="col-sm-3 col-form-label">
+            <div class="ml-4">
+              Địa chỉ
+            </div>
+          </label>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" id="exampleInputAddress" formControlName="address"
+                   placeholder="Địa chỉ">
+            <div class="text-danger" *ngFor="let validation of validation_messages.address">
+              <div class="error-message"
+                   *ngIf="patientForm.get('address').hasError(validation.type) && (patientForm.get('address').dirty || patientForm.get('address').touched)">
+                {{validation.message}}</div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="mb-3 row">
+          <label for="exampleInputPhone" class="col-sm-3 col-form-label">
+            <div class="ml-4">
+              Số điện thoại<span class="*">*</span>
+            </div>
+          </label>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" id="exampleInputPhone" formControlName="phone"
+                   placeholder="Số điện thoại">
+            <div class="text-danger" *ngFor="let validation of validation_messages.phone">
+              <div class="error-message"
+                   *ngIf="patientForm.get('phone').hasError(validation.type) && (patientForm.get('phone').dirty || patientForm.get('phone').touched)">
+                {{validation.message}}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3 row">
+          <label for="exampleInputEmail" class="col-sm-3 col-form-label">
+            <div class="ml-4">
+              Email<span class="*">*</span>
+            </div>
+          </label>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" id="exampleInputEmail" formControlName="email" placeholder="Email">
+            <div class="text-danger" *ngFor="let validation of validation_messages.email">
+              <div class="error-message"
+                   *ngIf="patientForm.get('email').hasError(validation.type) && (patientForm.get('email').dirty || patientForm.get('email').touched)">
+                {{validation.message}}</div>
+            </div>
+          </div>
+
+
+        </div>
+        <div class="mb-3 row">
+          <label for="exampleInputEmail" class="col-sm-3 col-form-label">
+            <div class="ml-4">
+             Mật khẩu<span class="*">*</span>
+            </div>
+          </label>
+          <div class="col-sm-6">
+            <input type="password" class="form-control" id="" formControlName="password" placeholder="Mật khẩu">
+            <div class="text-danger" *ngFor="let validation of validation_messages.password">
+              <div class="error-message"
+                   *ngIf="patientForm.get('password').hasError(validation.type) && (patientForm.get('password').dirty || patientForm.get('password').touched)">
+                {{validation.message}}</div>
+            </div>
+          </div>
+
+
+        </div>
+
+        <div class="d-flex justify-content-end" style="margin-right: 26%">
+          <div *ngIf="isSubmited then submited else notSubmited"></div>
+          <ng-template #notSubmited>
+            <button type="submit" class="btn btn-primary icon">Lưu</button>
+            <button style="margin-left: 10px" type="button" class="btn btn-dark icon" routerLink="">Hủy</button>
+          </ng-template>
+          <ng-template #submited>
+            <button type="submit" class="btn btn-primary icon" disabled>Lưu
+              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              Loading...
+            </button>
+          </ng-template>
+
+        </div>
+      </form>
+    </div>
+    <div class="col-2"></div>
+  </div>
+</div>
+

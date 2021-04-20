@@ -1,0 +1,42 @@
+header {
+  height: 80px;
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  /*height: 80px;*/
+  z-index: 9;
+  background-color:rgb(158,207,251) !important;
+}
+.navbar .logo {
+  margin-right: 30px;
+}
+
+body {
+  overflow-x: auto;
+}
+
+.borderless td, .borderless th {
+  border: none;
+}
+
+.title-info-patient {
+  width: 150px;
+}
+
+.historyInjection::-webkit-scrollbar {
+  display: none;
+}
+
+@media screen and (min-width: 320px) {
+  .map{
+    width: 350px;
+  }
+}
+@media screen and (min-width: 1280px) {
+  .map{
+    width: 650px;
+  }
+}

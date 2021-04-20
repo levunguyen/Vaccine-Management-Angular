@@ -1,0 +1,51 @@
+
+.title-h2{
+  font-weight: bold;
+  margin-bottom: 50px;
+}
+.bg-table-header{
+  background-color:rgb(158,207,251) !important;
+}
+.title-h5{
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-weight: bold;
+}
+.btn-secondary{
+
+  margin-left: 100px;
+}
+.with-button{
+  width: 120px;
+}
+.with-submit{
+  margin-top: 50px;
+}
+
+.header {
+  height: 80px;
+}
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  /*height: 80px;*/
+  z-index: 9;
+  background-color:rgb(158,207,251) !important;
+}
+.navbar .logo {
+  margin-right: 30px;
+}
+@media screen and (min-width: 320px) {
+  .map{
+    width: 350px;
+  }
+}
+@media screen and (min-width: 1280px) {
+  .map{
+    width: 650px;
+  }
+}
+.error-message{
+  color: red;
+}

@@ -1,0 +1,113 @@
+<div class="content" (click)="pageInput.value = ''">
+  <div class="container">
+    <h1 class="text-center mt-4 mb-4">Danh sách bệnh nhân<br>đã đăng kí tiêm chủng theo yêu cầu</h1>
+    <div class="search row d-flex justify-content-end mb-4 text-center">
+      <div class="col-xl-2 col-md-3">
+        <label>Họ và Tên</label>
+        <input (change)="name = $event.target.value" (keyup.enter)="page = 0;search()" class="form-control" type="text" placeholder="Họ Và Tên">
+      </div>
+      <div class="col-xl-2 col-md-3">
+        <label>Tình trạng</label>
+        <select (change)="status = $event.target.value" (keyup.enter)="page = 0;search()" class="form-control">
+          <option value="">Lựa chọn</option>
+          <option value=false>Chưa tiêm</option>
+          <option value=true>Đã tiêm</option>
+        </select>
+      </div>
+
+      <div class="col-auto">
+        <br>
+        <button class="btn btn-success mt-2" (click)="page = 0;search()"><i class="fa fa-search"></i> Tìm kiếm
+        </button>
+      </div>
+    </div>
+
+    <div class="table">
+      <table class="table-hover table-bordered">
+        <thead>
+        <tr class="bg-table-header text-center">
+          <th style="width: 50px">STT</th>
+          <th style="width: 150px">Mã bệnh nhân</th>
+          <th style="width: 200px">Họ và tên</th>
+          <th style="width: 150px">Ngày sinh</th>
+          <th style="width: 100px">Giới tính</th>
+          <th style="width: 200px">Người giám hộ</th>
+          <th style="width: 150px">Số điện thoại</th>
+          <th style="width: 200px">Địa chỉ</th>
+          <th style="width: 200px">Tên Vaccine</th>
+          <th style="width: 130px">Mô tả</th>
+          <th style="width: 130px">Mũi tiêm số</th>
+          <th style="width: 130px">Ngày tiêm</th>
+          <th style="width: 130px">Tình trạng</th>
+          <th style="width: 230px">Kiểm tra trước khi khám</th>
+        </tr>
+        </thead>
+        <tr *ngFor="let vac of vaccinationHistoryList, index as i">
+          <td style="text-align: center">{{i + 1}}</td>
+          <td style="text-align: center">BN-{{vac.patient.patientId}}</td>
+          <td>{{vac.patient.name}}</td>
+          <td style="text-align: center">{{vac.patient.dateOfBirth}}</td>
+          <td style="text-align: center">{{vac.patient.gender}}</td>
+          <td>{{vac.patient.guardian}}</td>
+          <td style="text-align: center">{{vac.patient.phone}}</td>
+          <td>{{vac.patient.address}}</td>
+          <td>{{vac.vaccination.vaccine.name}}</td>
+          <td>{{vac.vaccination.description}}</td>
+          <td>{{vac.vaccinationTimes}}</td>
+          <td>{{vac.vaccination.date}}</td>
+          <td class="text-center">
+            <div *ngIf="vac.status === true then logged else notLogged"></div>
+            <ng-template #logged>
+              <span class="badge badge-primary">Đã tiêm</span>
+            </ng-template>
+            <ng-template #notLogged>
+              <span class="badge badge-danger">Chưa tiêm</span>
+            </ng-template>
+          </td>
+          <td class="text-center">
+            <button class="btn btn-success" [routerLink]="['view',vac.patient.patientId, vac.vaccinationHistoryId]">Kiểm tra</button>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <div>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination d-flex justify-content-md-end justify-content-center">
+          <li class="page-item">
+            <button class="page-link" [hidden]="page == 0" (click)="page = 0; search()">Đầu</button>
+          </li>
+          <li class="page-item">
+            <button class="page-link" [hidden]="page == 0" (click)="page = page - 1; search()">Trang
+              sau
+            </button>
+          </li>
+          <li class="page-item col-md-1 col-2  px-0">
+            <div class="input-group">
+              <input #pageInput (change)="page = $event.target.value - 1" type="text"
+                     class="form-control text-right rounded-0" [placeholder]="page + 1" aria-label="Username"
+                     aria-describedby="basic-addon1">
+              <div class="input-group-prepend">
+                <span class="input-group-text"> /{{pageable.totalPages}}</span>
+              </div>
+            </div>
+          </li>
+          <li class="page-item">
+            <button (click)="search()" class="btn btn-primary rounded-0">Đi</button>
+          </li>
+          <li class="page-item">
+            <button class="page-link" [hidden]="page >=  pageable.totalPages - 1"
+                    (click)="page = page + 1; search()">Trang kế
+            </button>
+          </li>
+          <li class="page-item">
+            <button class="page-link" [hidden]="page >=  pageable.totalPages - 1 && page < pageable.totalPages"
+                    (click)="page = pageable.totalPages - 1; search()">Cuối
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+  </div>
+</div>

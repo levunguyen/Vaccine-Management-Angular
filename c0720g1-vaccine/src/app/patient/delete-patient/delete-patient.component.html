@@ -1,0 +1,10 @@
+<h3 style="color: red">Xác Nhận Xóa !</h3>
+<hr>
+<h5>Bạn Có Chắc Muốn Xóa Bệnh Nhân <label style="color: red"> {{deleteName}}</label> Không ?</h5>
+<p style="color: red">Hành động này không thể được hoàn tác !</p>
+<div class="row d-flex justify-content-end">
+  <button class="btn btn-success" style="width: 100px;margin-right: 20px" data-dismiss="modal" id="closeModal"  >Hoàn Tác</button>
+  <button class="btn btn-danger mr-3" style="width: 100px" (click)="deletePatient()"  data-dismiss="modal">Xóa</button>
+</div>
+
+

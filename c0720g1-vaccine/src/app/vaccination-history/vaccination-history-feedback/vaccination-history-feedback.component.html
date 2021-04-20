@@ -1,0 +1,71 @@
+<!-- content -->
+<div class="container">
+
+  <div class="container-fluid" id="custom-font">
+    <div class="container">
+      <h1 class="text-center mt-4 mb-4">Phản hồi thông tin sau khi tiêm chủng</h1>
+      <h5 class="title-h5">Thông tin khách hàng</h5>
+      <form [formGroup]="formGroup" (ngSubmit)="update()">
+        <div class="row">
+          <div class="row col-6">
+            <div class="col-4">
+              <p>Mã bệnh nhân:</p>
+              <p>Tên bệnh nhân:</p>
+              <p>Giới tính:</p>
+              <p>Ngày sinh:</p>
+              <p>Người giám hộ:</p>
+              <p>Địa chỉ:</p>
+              <p>Số điện thoại:</p>
+            </div>
+
+            <div class="col-8">
+              <p>{{vaccinationHistoryFeedback.patientId}}</p>
+              <p>{{vaccinationHistoryFeedback.patientName}}</p>
+              <p>{{vaccinationHistoryFeedback.patientGender}}</p>
+              <p>{{vaccinationHistoryFeedback.patientAge | date: "dd-MM-yyyy"}}</p>
+              <p>{{vaccinationHistoryFeedback.patientGuardian}}</p>
+              <p>{{vaccinationHistoryFeedback.patientAddress}}</p>
+              <p>{{vaccinationHistoryFeedback.patientPhone}}</p>
+            </div>
+          </div>
+          <div class="col-6 row">
+
+            <div class="col-4">
+              <p>Loại vắc-xin:</p>
+              <p>Ngày tiêm:</p>
+            </div>
+            <div class="col-8">
+              <p>{{vaccinationHistoryFeedback.vaccineTypeName}}</p>
+              <p>{{vaccinationHistoryFeedback.vaccinationDate | date: "dd-MM-yyyy"}}</p>
+            </div>
+            <div class="col-10">
+              <p>Tình trạng sau khi tiêm(Sốt cao,sốt nhẹ,dị ứng,...)</p>
+              <textarea formControlName="afterStatus" class="form-control" rows="4" id="comment">
+            </textarea>
+              <div class="text-danger" *ngFor="let validation of validation_messages.afterStatus">
+                <small class="error-message"
+                     *ngIf="formGroup.get('afterStatus').hasError(validation.type) && (formGroup.get('afterStatus').dirty || formGroup.get('afterStatus').touched)">
+                  {{validation.message}}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="text-center with-submit">
+
+          <div *ngIf="isSubmited then submited else notSubmited"></div>
+          <ng-template #notSubmited>
+            <button type="submit" class="btn btn-warning with-button">Phản hồi lại</button>
+            <button type="button" class="btn btn-secondary with-button" [routerLink]="'/vaccination-history/'+ vaccinationHistoryFeedback.patientId">Hủy</button>
+
+          </ng-template>
+          <ng-template #submited>
+            <button class="btn btn-lg btn-primary text-uppercase" type="button" disabled>
+              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              Loading...
+            </button>
+          </ng-template>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

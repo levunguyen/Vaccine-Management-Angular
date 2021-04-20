@@ -1,0 +1,121 @@
+<div class="container mt-4">
+  <h2 align="center">Chỉnh sửa thông tin nhân viên</h2>
+  <form [formGroup]="employeeFormEdit" (ngSubmit)="editEmployee()">
+    <div class="form-row">
+      <div class="form-group col-sm-6 col-md-6 col-lg-6">
+        <label>Mã Nhân Viên:</label>
+        <input type="text" class="form-control" formControlName="employeeId" readonly>
+      </div>
+      <div class="form-group col-sm-6 col-md-6 col-lg-6">
+        <label>
+          Họ và tên:
+          <sup class="text-danger">(*)</sup>
+        </label>
+        <div>
+          <input type="text" class="form-control" formControlName="name">
+        </div>
+        <small class="text-danger" *ngIf="employeeFormEdit.controls.name.errors?.required && employeeFormEdit.controls.name.touched">
+          Không được để trống!
+        </small>
+        <small class="text-danger"
+               *ngIf="employeeFormEdit.controls.name.errors?.pattern && employeeFormEdit.controls.name.touched"
+               class="text-danger">
+          Tên không được là số hoặc ký tự đặc biệt!
+        </small>
+        <small class="text-danger"
+               *ngIf="employeeFormEdit.get('name').hasError('maxlength') && employeeFormEdit.controls.name.touched"
+               class="text-danger">
+          Tên không được dài hơn 40 ký tự!
+        </small>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-sm-6 col-md-6 col-lg-6">
+        <label>
+          Ngày sinh:
+          <sup class="text-danger">(*)</sup>
+        </label>
+        <input
+          formControlName="dateOfBirth"
+          type="date" class="form-control">
+        <small class="text-danger" *ngIf="employeeFormEdit.get('dateOfBirth').hasError('ageNotEnough')
+      && employeeFormEdit.controls.dateOfBirth.touched">
+          Ngày sinh phải lớn hơn 18 và nhỏ hơn 100!
+        </small>
+      </div>
+      <div class="form-group col-sm-6 col-md-6 col-lg-6">
+        <label>
+          CMND:
+          <sup class="text-danger">(*)</sup>
+        </label>
+        <div>
+          <input type="text" class="form-control" formControlName="idCard">
+        </div>
+        <small class="text-danger" style="clear: both" *ngIf="employeeFormEdit.controls.idCard.errors?.required && employeeFormEdit.controls.idCard.touched" class="text-danger">
+          Không được để trống!
+        </small>
+        <small class="text-danger" style="clear: both" *ngIf="employeeFormEdit.controls.idCard.errors?.pattern && employeeFormEdit.controls.idCard.touched" class="text-danger">
+          CMND phải là 9 số!
+        </small>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-sm-6 col-md-6 col-lg-6">
+        <label>Chức vụ:</label>
+        <select class="form-control"
+                formControlName="position">
+          <option *ngFor="let position of positionList" [selected]="position.positionId == employee.position"
+                  [value]="position.positionId">{{position.name}}</option>
+        </select>
+      </div>
+      <div class="form-group col-sm-6 col-md-6 col-lg-6">
+        <label>
+          Số điện thoại:
+          <sup class="text-danger">(*)</sup>
+        </label>
+        <div>
+          <input type="text" class="form-control" formControlName="phone">
+        </div>
+        <small class="text-danger" *ngIf="employeeFormEdit.controls.phone.errors?.required && employeeFormEdit.controls.phone.touched" class="text-danger">
+          Không được để trống!
+        </small>
+        <small class="text-danger" *ngIf="employeeFormEdit.controls.phone.errors?.pattern && employeeFormEdit.controls.phone.touched" class="text-danger">
+          Không đúng định dạng!
+        </small>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-sm-6 col-md-6 col-lg-6">
+        <label>
+          Địa chỉ:
+          <sup class="text-danger">(*)</sup>
+        </label>
+        <input type="text" class="form-control" formControlName="address">
+        <small class="text-danger" *ngIf="employeeFormEdit.controls.address.errors?.required && employeeFormEdit.controls.address.touched">
+          Không được để trống!
+        </small>
+        <small class="text-danger"
+               *ngIf="employeeFormEdit.get('address').hasError('maxlength') && employeeFormEdit.controls.address.touched"
+               class="text-danger">
+          Địa chỉ không được dài hơn 40 ký tự!
+        </small>
+      </div>
+      <div class="form-group col-sm-6 col-md-6 col-lg-6">
+        <label>
+          Quyền truy cập:
+        </label>
+        <select class="form-control"
+                formControlName="role">
+          <option *ngFor="let role of roleList" [selected]="role.roleId == employee.role"
+                  [value]="role.roleId">{{role.name}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row d-flex justify-content-center mt-3">
+      <button type="submit" class="btn btn-primary mr-2"
+              [disabled]="employeeFormEdit.invalid">Lưu</button>
+      <a routerLink="/employee" class="btn btn-secondary">Quay lại</a>
+    </div>
+
+  </form>
+</div>

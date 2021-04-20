@@ -1,0 +1,128 @@
+<div class="text-center mt-5">
+  <h3>TẠO MỚI NHÂN VIÊN</h3>
+</div>
+<div class="container">
+  <form [formGroup]="employeeForm" (ngSubmit)="create()">
+    <div class="row  mt-5">
+      <div class="col-md-6">
+        <div class="container">
+          <div class="row mb-3">
+            <div class="col-4">
+              <label class="col-form-label">Mã nhân viên</label>
+            </div>
+            <div class="col-8">
+              <input class="form-control" type="text" readonly>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-4">
+              <label class="col-form-label">Họ và tên (<label style="color:red">*</label>)</label>
+            </div>
+            <div class="col-8">
+              <input class="form-control" type="text" formControlName="name">
+              <div class="text-danger" *ngFor="let validation of validation_messages.name">
+                <div class="error-message"
+                     *ngIf="employeeForm.get('name').hasError(validation.type) && (employeeForm.get('name').dirty || employeeForm.get('name').touched)">
+                  {{validation.message}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-4">
+              <label class="col-form-label">Ngày sinh (<label style="color:red">*</label>)</label>
+            </div>
+            <div class="col-8">
+              <input style="width: 170px;" class="form-control" type="date" formControlName="dateOfBirth">
+              <div class="text-danger" *ngFor="let validation of validation_messages.dateOfBirth">
+                <div class="error-message"
+                     *ngIf="employeeForm.get('dateOfBirth').hasError(validation.type) && (employeeForm.get('dateOfBirth').dirty || employeeForm.get('dateOfBirth').touched)">
+                  {{validation.message}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-4">
+              <label class="col-form-label">CMND (<label style="color:red">*</label>)</label>
+            </div>
+            <div class="col-8">
+              <input class="form-control" type="text" formControlName="idCard">
+
+              <div class="text-danger" *ngFor="let validation of validation_messages.idCard">
+                <div class="error-message"
+                     *ngIf="employeeForm.get('idCard').hasError(validation.type) && (employeeForm.get('idCard').dirty || employeeForm.get('idCard').touched)">
+                  {{validation.message}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="container">
+          <div class="row mb-3">
+            <div class="col-4">
+              <label class="col-form-label">Địa chỉ (<label style="color:red">*</label>)</label>
+            </div>
+            <div class="col-8">
+              <input class="form-control" type="text" formControlName="address">
+              <div class="text-danger" *ngFor="let validation of validation_messages.address">
+                <div class="error-message"
+                     *ngIf="employeeForm.get('address').hasError(validation.type) && (employeeForm.get('address').dirty || employeeForm.get('address').touched)">
+                  {{validation.message}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-4">
+              <label class="col-form-label">Số điện thoại (<label style="color:red">*</label>)</label>
+            </div>
+            <div class="col-8">
+              <input class="form-control" type="text" formControlName="phone">
+              <div class="text-danger" *ngFor="let validation of validation_messages.phone">
+                <div class="error-message"
+                     *ngIf="employeeForm.get('phone').hasError(validation.type) && (employeeForm.get('phone').dirty || employeeForm.get('phone').touched)">
+                  {{validation.message}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-4">
+              <label class="col-form-label">Chức vụ (<label style="color:red">*</label>)</label>
+            </div>
+            <div class="col-8">
+              <select class="form-control" formControlName="position">
+                <option *ngFor="let position of positionList" [value]="position.positionId">{{position.name}}</option>
+              </select>
+              <div class="text-danger" *ngFor="let validation of validation_messages.position">
+                <div class="error-message"
+                     *ngIf="employeeForm.get('position').hasError(validation.type) && (employeeForm.get('position').dirty || employeeForm.get('position').touched)">
+                  {{validation.message}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-4">
+              <label class="col-form-label">Quyền truy cập (<label style="color:red">*</label>)</label>
+            </div>
+            <div class="col-8">
+              <select class="form-control" formControlName="account">
+                <option *ngFor="let account of roleList" [value]="account.roleId">{{account.name}}</option>
+              </select>
+              <div class="text-danger" *ngFor="let validation of validation_messages.account">
+                <div class="error-message"
+                     *ngIf="employeeForm.get('account').hasError(validation.type) && (employeeForm.get('account').dirty || employeeForm.get('account').touched)">
+                  {{validation.message}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-end">
+            <div>
+              <button type="submit" [disabled]="employeeForm.invalid" style="width: 80px" class="btn btn-primary mr-2">Lưu</button>
+              <button class="btn btn-dark" routerLink="/employee" style="width: 80px">Hủy</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+

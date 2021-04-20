@@ -1,0 +1,59 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+      <div class="card card-signin my-5">
+        <div class="card-body">
+          <h5 class="card-title text-center">Đăng Ký</h5>
+          <form class="form-signin" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+            <div class="form-label-group">
+              <input autofocus formControlName="username" type="text" class="form-control"
+                     placeholder="Tên tài khoản*">
+              <div class="error-place">
+
+              </div>
+            </div>
+            <div class="form-label-group">
+              <input formControlName="password" type="password" id="inputPassword" class="form-control"
+                     placeholder="Mật khẩu *" required>
+              <div class="error-place">
+                <div *ngFor="let validation of validation_messages.password">
+                  <small class="text-danger"
+                         *ngIf="formGroup.get('password').hasError(validation.type) && formGroup.get('password').touched">
+                    {{validation.message}}</small>
+                </div>
+              </div>
+            </div>
+            <div class="form-label-group">
+              <input formControlName="email" type="email" class="form-control" placeholder="Email*"
+                     required>
+              <div class="error-place">
+                <div *ngFor="let validation of validation_messages.email">
+                  <small class="text-danger"
+                         *ngIf="formGroup.get('email').hasError(validation.type) && formGroup.get('email').touched">
+                    {{validation.message}}</small>
+                </div>
+              </div>
+            </div>
+            <p><a href="" routerLink="/reset-password" data-dismiss="modal">Quên mật khẩu ?</a></p>
+            <small id="emailHelp" class="form-text text-muted">Những trường có dâu (*) là bắt buộc nhập</small>
+
+            <div *ngIf="isSubmited then submited else notSubmited"></div>
+            <ng-template #notSubmited>
+              <button class="btn btn-lg btn-primary text-uppercase" type="submit">Đăng ký</button>
+              <button class="btn btn-lg btn-secondary text-uppercase" type="button" routerLink="">Huỷ</button>
+            </ng-template>
+            <ng-template #submited>
+              <button class="btn btn-lg btn-primary text-uppercase" type="button" disabled>
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                Loading...
+              </button>
+            </ng-template>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

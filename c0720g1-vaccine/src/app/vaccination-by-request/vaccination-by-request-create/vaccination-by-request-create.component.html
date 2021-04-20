@@ -1,0 +1,304 @@
+<form [formGroup]="formRegister" (ngSubmit)="submit()">
+  <div class="content" *ngIf="checkLoad">
+    <div class="container">
+      <h1 class="text-center mt-4 mb-4">Đăng ký tiêm vắc-xin</h1>
+
+      <div class="row justify-content-center">
+
+        <div class="col-xl-6 left">
+          <div class="container">
+            <h3 class="mb-4">Thông tin bệnh nhân</h3>
+
+            <div class="row mb-3">
+              <div class="col-4">
+                <label for="name" class="col-form-label">Họ và tên <span
+                  class="text-danger">*</span></label>
+              </div>
+              <div class="col-8">
+                <input type="text" id="name" class="form-control" [value]="patient.name" readonly>
+                <!--                <input-->
+                <!--                  [class]="formRegister.get('name').invalid && (formRegister.get('name').touched || check) ? 'border-danger' : ''"-->
+                <!--                  formControlName="name" id="name" class="form-control" type="text"-->
+                <!--                  placeholder="Nhập họ và tên bệnh nhân">-->
+                <!--                <div style="height: 10px; font-size: 15px">-->
+                <!--                <span-->
+                <!--                  *ngIf="formRegister.get('name').hasError('required') && (formRegister.get('name').touched || check)"-->
+                <!--                  class="text-danger">-->
+                <!--                  Họ và tên không được để trống-->
+                <!--                </span>-->
+                <!--                  <span *ngIf="formRegister.get('name').hasError('pattern') && (formRegister.get('name').touched)"-->
+                <!--                        class="text-danger">-->
+                <!--                  Họ và tên không được chưa ký tự đặc biệt-->
+                <!--                </span>-->
+                <!--                </div>-->
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-4">
+                <label class="col-form-label">Giới tính <span class="text-danger">*</span></label>
+              </div>
+
+              <div class="col-8">
+                <input type="text" id="gender" class="form-control" [value]="patient.gender" readonly>
+                <!--                <div class="col-5">-->
+                <!--                  <input class="mr-2" formControlName="gender" value="Nam" name="gender" id="nam" type="radio">-->
+                <!--                  <label for="nam">Nam</label>-->
+                <!--                </div>-->
+                <!--                <div class="col-4">-->
+                <!--                  <input class="mr-2" formControlName="gender" value="Nữ" name="gender" id="nu" type="radio">-->
+                <!--                  <label for="nu">Nữ</label>-->
+                <!--                </div>-->
+                <!--                <br>-->
+                <!--                <div style="height: 10px; font-size: 15px" class="col-12">-->
+                <!--                <span *ngIf="check && formRegister.get('gender').hasError('required')" class="text-danger">-->
+                <!--                 Vui lòng chọn giới tính-->
+                <!--                </span>-->
+                <!--                </div>-->
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-4">
+                <label for="dateOfBirth" class="col-form-label">Ngày sinh <span class="text-danger">*</span></label>
+              </div>
+              <div class="col-8">
+                <input type="text" id="dateOfBirth" class="form-control" [value]="patient.dateOfBirth" readonly>
+
+                <!--                <input-->
+                <!--                  [class]="formRegister.get('dateOfBirth').invalid && (formRegister.get('dateOfBirth').touched || check )? 'border-danger' : ''"-->
+                <!--                  formControlName="dateOfBirth" id="dateOfBirth" class="form-control" type="date">-->
+                <!--                <div style="height: 10px; font-size: 15px">-->
+                <!--                 <span-->
+                <!--                   *ngIf="formRegister.get('dateOfBirth').hasError('required') && (formRegister.get('dateOfBirth').touched || check)"-->
+                <!--                   class="text-danger">-->
+                <!--                 Vui lòng nhập ngày sinh-->
+                <!--                </span>-->
+                <!--                  <span-->
+                <!--                    *ngIf="formRegister.get('dateOfBirth').hasError('checkAge') && (formRegister.get('dateOfBirth').touched || check)"-->
+                <!--                    class="text-danger">-->
+                <!--                 Tuổi phải từ 90 ngày tuổi đến 100 tuổi-->
+                <!--                </span>-->
+                <!--                </div>-->
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-4">
+                <label for="guardian" class="col-form-label">Người giám hộ <span
+                  class="text-danger">*</span></label>
+              </div>
+              <div class="col-8">
+                <input type="text" id="guardian" class="form-control" [value]="patient.guardian" readonly>
+
+                <!--                <input-->
+                <!--                  [class]="formRegister.get('guardian').invalid && (formRegister.get('guardian').touched || check )? 'border-danger' : ''"-->
+                <!--                  formControlName="guardian" id="guardian" class="form-control" type="text"-->
+                <!--                  placeholder="Nhập họ và tên người giám hộ">-->
+                <!--                <div style="height: 10px; font-size: 15px">-->
+                <!--                 <span-->
+                <!--                   *ngIf="formRegister.get('guardian').hasError('required') && (formRegister.get('guardian').touched || check)"-->
+                <!--                   class="text-danger">-->
+                <!--                 Người giám hộ không được để trống-->
+                <!--                </span>-->
+                <!--                  <span-->
+                <!--                    *ngIf="formRegister.get('guardian').hasError('pattern') && (formRegister.get('guardian').touched || check)"-->
+                <!--                    class="text-danger">-->
+                <!--                 Người giám hộ không được chưa ký tự đặc biệt-->
+                <!--                </span>-->
+                <!--                </div>-->
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-4">
+                <label for="address" class="col-form-label">Địa chỉ <span
+                  class="text-danger">*</span></label>
+              </div>
+              <div class="col-8">
+                <input type="text" id="address" class="form-control" [value]="patient.address" readonly>
+
+                <!--                <input-->
+                <!--                  [class]="formRegister.get('address').invalid && (formRegister.get('address').touched  || check)? 'border-danger' : ''"-->
+                <!--                  formControlName="address" id="address" class="form-control" type="text" placeholder="Nhập địa chỉ">-->
+                <!--                <div style="height: 10px; font-size: 15px">-->
+                <!--                 <span-->
+                <!--                   *ngIf="formRegister.get('address').hasError('required') && (formRegister.get('address').touched || check)"-->
+                <!--                   class="text-danger">-->
+                <!--                 Địa chỉ không được để trống-->
+                <!--                </span>-->
+                <!--                </div>-->
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-4">
+                <label for="phoneNumber" class="col-form-label">Số điện thoại <span
+                  class="text-danger">*</span></label>
+              </div>
+              <div class="col-8">
+                <input type="text" id="phoneNumber" class="form-control" [value]="patient.phone" readonly>
+
+                <!--                <input (change)="checkPhoneDuplicate = false"-->
+                <!--                       [class]="formRegister.get('phone').invalid && (formRegister.get('phone').touched || check )? 'border-danger' : ''"-->
+                <!--                       formControlName="phone" id="phoneNumber" class="form-control" type="text"-->
+                <!--                       placeholder="Nhập số điện thoại">-->
+                <!--                <div style="height: 10px; font-size: 15px">-->
+                <!--                 <span-->
+                <!--                   *ngIf="formRegister.get('phone').hasError('required') &&( formRegister.get('phone').touched || check)"-->
+                <!--                   class="text-danger">-->
+                <!--                 Số điện thoại không được để trống-->
+                <!--                </span>-->
+                <!--                  <span-->
+                <!--                    *ngIf="formRegister.get('phone').hasError('pattern') &&( formRegister.get('phone').touched || check)"-->
+                <!--                    class="text-danger">-->
+                <!--                 Số điện thoại không đúng định dạng-->
+                <!--                </span>-->
+                <!--                  <span *ngIf="checkPhoneDuplicate" class="text-danger">-->
+                <!--                 Số điện thoại đã tồn tại-->
+                <!--                </span>-->
+                <!--                </div>-->
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-4">
+                <label for="email" class="col-form-label">Email <span
+                  class="text-danger">*</span></label>
+              </div>
+              <div class="col-8">
+                <input type="text" id="email" class="form-control" [value]="patient.email" readonly>
+
+                <!--                <input (change)="checkEmailDuplicate = false"-->
+                <!--                       [class]="formRegister.get('email').invalid && (formRegister.get('email').touched || check )? 'border-danger' : ''"-->
+                <!--                       formControlName="email" id="email" class="form-control" type="text" placeholder="abc@abc.abc">-->
+                <!--                <div style="height: 10px; font-size: 15px">-->
+                <!--                 <span-->
+                <!--                   *ngIf="formRegister.get('email').hasError('required') &&( formRegister.get('email').touched || check)"-->
+                <!--                   class="text-danger">-->
+                <!--                 Email không được để trống-->
+                <!--                </span>-->
+                <!--                  <span *ngIf="checkEmailDuplicate" class="text-danger">-->
+                <!--                 Email đã tồn tại-->
+                <!--                </span>-->
+                <!--                  <span-->
+                <!--                    *ngIf="formRegister.get('email').hasError('pattern') &&( formRegister.get('email').touched || check)"-->
+                <!--                    class="text-danger">-->
+                <!--                 Email không đúng định dạng-->
+                <!--                </span>-->
+                <!--                </div>-->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-6 right">
+          <div class="container">
+            <h3 class="mb-4">Thông tin vắc-xin</h3>
+
+            <div class="row mb-3 ">
+              <div class="col-4">
+                <label class="col-form-label">Tên vắc xin</label>
+              </div>
+              <div class="col-8">
+                <input [value]="vaccineDTO?.name" class="form-control" type="text" readonly>
+                <div style="height: 10px; font-size: 15px"></div>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-4">
+                <label class="col-form-label">Loại vắc-xin</label>
+              </div>
+              <div class="col-8">
+                <input [value]="vaccineDTO?.vaccineType.name" class="form-control" type="text" readonly>
+                <div style="height: 10px; font-size: 15px"></div>
+              </div>
+            </div>
+            <!--            <div class="row mb-3">-->
+            <!--              <div class="col-4">-->
+            <!--                <label class="col-form-label">Nước sản xuất</label>-->
+            <!--              </div>-->
+            <!--              <div class="col-8">-->
+            <!--                <input [value]="vaccineDTO?.origin" class="form-control" type="text" readonly>-->
+            <!--                <div style="height: 10px; font-size: 15px"></div>-->
+            <!--              </div>-->
+            <!--            </div>-->
+            <div class="row mb-3">
+              <div class="col-4">
+                <label for="dateStart" class="col-form-label">Ngày tiêm<span
+                  class="text-danger">*</span></label>
+              </div>
+              <div class="col-8">
+                <input (change)="checkDate($event.target.value)"
+                       [class]="formRegister.get('dateVaccination').invalid && (formRegister.get('dateVaccination').touched || check )? 'border-danger' : ''"
+                       formControlName="dateVaccination" id="dateStart" class="form-control" type="date">
+                <div style="height: 10px; font-size: 15px">
+                <span
+                  *ngIf="formRegister.get('dateVaccination').hasError('required') &&( formRegister.get('dateVaccination').touched || check)"
+                  class="text-danger">
+                 Chọn ngày tiêm
+                </span>
+                  <span
+                    *ngIf="formRegister.get('dateVaccination').hasError('checkDateVaccination') &&( formRegister.get('dateVaccination').touched || check)"
+                    class="text-danger">
+                 Ngày tiêm phải lơn hơn hoặc bằng ngày hiện tại
+                </span>
+                  <span *ngIf="checkdate"
+                        class="text-danger">
+                 Ngày này đã hết chỗ. Vui lòng chọn ngày khác
+                </span>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-4">
+                <label for="time" class="col-form-label">Giờ tiêm<span
+                  class="text-danger">*</span></label>
+              </div>
+              <div class="col-8">
+                <select [(ngModel)]="timeVaccination"  id="time" class="form-control" formControlName="timeVaccination">
+                  <option value="">Chọn giờ tiêm</option>
+                  <option value="08:00:00 - 09:30:00" [disabled]="checkTime1"
+                          [class]="checkTime1 ? 'text-danger' : ''">{{checkTime1 ? '08:00:00 - 09:30:00--Đã hết' : '08:00:00 - 09:30:00'}} </option>
+                  <option value="09:30:00 - 11:00:00" [disabled]="checkTime2"
+                          [class]="checkTime2 ? 'text-danger' : ''">{{checkTime2 ? '09:30:00 - 11:00:00--Đã hết' : '09:30:00 - 11:00:00 '}} </option>
+                  <option value="13:30:00 - 15:00:00" [disabled]="checkTime3"
+                          [class]="checkTime3 ? 'text-danger' : ''"> {{checkTime3 ? '13:30:00 - 15:00:00--Đã hết' : '13:30:00 - 15:00:00'}} </option>
+                  <option value="15:00:00 - 16:30:00" [disabled]="checkTime4"
+                          [class]="checkTime4 ? 'text-danger' : ''"> {{checkTime4 ? '15:00:00 - 16:30:00--Đã hết' : '15:00:00 - 16:30:00'}} </option>
+                </select>
+                <div style="height: 10px; font-size: 15px">
+                <span
+                  *ngIf="formRegister.get('timeVaccination').hasError('required') &&( formRegister.get('timeVaccination').touched || check)"
+                  class="text-danger">
+                 Vui lòng chọn giờ tiêm
+                </span>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-3" *ngIf="vaccineDTO.duration">
+              <div class="col-4">
+                <label for="dateStart" class="col-form-label">Lộ trình <span
+                  class="text-danger">*</span></label>
+              </div>
+              <div class="col-8">
+                <input type="text" class="form-control" [value]="vaccineDTO.duration*vaccineDTO.times + ' ngày'" readonly>
+              </div>
+            </div>
+            <div class="row mb-3" *ngIf="vaccineDTO.times">
+              <div class="col-4">
+                <label for="dateStart" class="col-form-label">Số lần tiêm<span
+                  class="text-danger">*</span></label>
+              </div>
+              <div class="col-8">
+                <input type="text" class="form-control" [value]="vaccineDTO.times + ' lần'" readonly>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-3">
+          <button *ngIf="!isSubmitted" style="width: 100px" class="btn btn-success mr-1">Đăng ký</button>
+          <button *ngIf="isSubmitted" class="btn btn-success mr-1" type="button" disabled>
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          </button>
+          <a style="width: 100px;" routerLink="/vaccination-by-request/list" class="btn btn-dark ml-1">Hủy</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</form>

@@ -1,0 +1,93 @@
+<div class="content" (click)="pageInput.value = ''">
+  <div class="container">
+    <h1 class="text-center mt-4 mb-4">Bảng thông tin vắc-xin của trung tâm</h1>
+
+    <div class="search row d-flex justify-content-xl-end justify-content-center mb-4 text-center">
+      <!--            <div class="col-xl-2 col-12">-->
+      <!--                <br>-->
+      <!--                <button class="btn btn-success mt-2 mb-md-3"><i class="fa fa-plus"></i> Thêm mới</button>-->
+      <!--            </div>-->
+      <div class="col-xl-2 col-md-3">
+        <label for="nameVaccine">Tên vắc-xin</label>
+        <input (keydown.enter)="page = 0; getListVaccine()" [(ngModel)]="name"  id="nameVaccine" class="form-control" type="text" placeholder="Nhập tên vắc-xin">
+      </div>
+      <div class="col-xl-2 col-md-3">
+        <label for="vaccineType">Loại vắc-xin</label>
+        <input (keydown.enter)="page = 0; getListVaccine()" [(ngModel)]="vaccineTypename" id="vaccineType" class="form-control" type="text" placeholder="Nhập loại vắc-xin">
+      </div>
+      <div class="col-xl-2 col-md-3">
+        <label for="provider">Nhà sản xuất</label>
+        <input (keydown.enter)="page = 0; getListVaccine()" [(ngModel)]="origin" id="provider" class="form-control" type="text" placeholder="Nhập nhà sản xuất">
+
+      </div>
+      <div class="col-xl-2 col-md-3">
+        <label for="status">Tình trạng vắc-xin</label>
+        <select (keydown.enter)="page = 0; getListVaccine()" [(ngModel)]="status" id="status" class="form-control" name="">
+          <option value="">Lựa chọn...</option>
+          <option value="true" >Còn</option>
+          <option value="false" >Hết</option>
+        </select>
+      </div>
+      <div>
+        <br>
+        <button class="btn btn-warning ml-5 mt-2"  (click)="resetSearch()">
+          <i class="fas fa-sync-alt"></i>
+        </button>
+      </div>
+      <div class="col-xl-2 col-4 mt-xl-4 mt-md-3 mt-2 d-xl-flex justify-content-xl-end">
+        <button (click)="page = 0; getListVaccine()"  class="btn btn-success mt-2"><i class="fa fa-search"></i> Tìm kiếm</button>
+      </div>
+    </div>
+
+    <div class="">
+      <table class="table table-hover table-bordered ">
+        <thead>
+        <tr style="background-color:   rgb(158,207,251) !important;">
+          <th>STT</th>
+          <th>Tên vắc-xin</th>
+          <th>Loại vắc-xin</th>
+          <th>Nước sản xuất</th>
+          <th>Độ tuổi tiêm chủng</th>
+          <th>Tình trạng vắc-xin</th>
+          <th>Đăng ký tiêm</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let v of vaccineList; let i = index">
+          <td height="50px">{{i + 1}}</td>
+          <td style="width: 300px">{{v.name}}</td>
+          <td>{{v.vaccineType.name}}</td>
+          <td>{{v.origin}}</td>
+          <td>{{v.age}}</td>
+          <td>{{v.quantity > 0 ? 'Còn' : 'Hết'}}</td>
+          <td class="text-center">
+            <button [disabled]="v.quantity < 1"  [routerLink]="v.quantity > 1 ?'/vaccination-by-request/create/' + v.vaccineId : '/vaccination-by-request/list'"  class="btn btn-success">Đăng ký</button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination d-flex justify-content-md-end justify-content-center">
+          <li class="page-item"><button class="page-link" [hidden]="page < 1" (click)="page = 0; getListVaccine()">Đầu</button></li>
+          <li class="page-item"><button class="page-link" [hidden]="page < 1" (click)="page = page - 1; getListVaccine()">Trang trước</button></li>
+          <li class="page-item col-md-1 col-2  px-0">
+            <div class="input-group">
+              <input  #pageInput (change)="page = $event.target.value - 1" type="text" class="form-control text-right rounded-0" [placeholder]="page + 1" aria-label="Username" aria-describedby="basic-addon1">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"> /{{pageable.totalPages}}</span>
+              </div>
+            </div>
+          </li>
+          <li class="page-item">
+            <button (click)="getListVaccine()" class="btn btn-primary rounded-0">Đi</button>
+          </li>
+          <li class="page-item"><button class="page-link" [hidden]="page >=  pageable.totalPages - 1" (click)="page = page + 1; getListVaccine()">Trang kế</button></li>
+          <li class="page-item"><button class="page-link" [hidden]="page >=  pageable.totalPages - 1 && page < pageable.totalPages"  (click)="page = pageable.totalPages - 1; getListVaccine()">Cuối</button></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>

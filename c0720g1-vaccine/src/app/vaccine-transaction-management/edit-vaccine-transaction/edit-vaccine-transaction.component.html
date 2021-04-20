@@ -1,0 +1,76 @@
+<div class="row justify-content-center">
+  <div class="col-xl-6">
+    <div class="container">
+      <form [formGroup]="formGroup" *ngIf="defvalue" (ngSubmit)="submit()">
+        <h3 class="mb-4">Cập nhật danh sách giao dịch với khách hàng</h3>
+
+        <div class="row mb-3 ">
+          <div class="col-4">
+            <label class="col-form-label">Mã bệnh nhân: </label>
+          </div>
+          <div class="col-8 mt-2">
+            <p>{{"BN-" + vaccineTransaction.vaccinationHistory.patient.patientId}}</p>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-4">
+            <label class="col-form-label">Tên bệnh nhân: </label>
+          </div>
+          <div class="col-8 mt-2">
+            <p>{{vaccineTransaction.vaccinationHistory.patient.name}}</p>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-4">
+            <label class="col-form-label">Loại vắc xin: </label>
+          </div>
+          <div class="col-8 mt-2">
+            <p>{{vaccineTransaction.vaccinationHistory.vaccination.vaccine.vaccineType.name}}</p>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-4">
+            <label class="col-form-label">Ngày giao dịch: </label>
+          </div>
+          <div class="col-8 mt-2">
+            <p>{{vaccineTransaction.vaccinationHistory.vaccination.date | date:'dd/MM/yyyy'}}</p>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-4">
+            <label for="price" class="col-form-label">Giá (VNĐ/mũi)<span class="text-danger">*</span>: </label>
+          </div>
+          <div class="col-8">
+            <input id="price" class="form-control" formControlName="price" type="text" placeholder="Nhập Giá">
+            <div class="error-place" *ngFor="let validation of validate_message.price">
+              <small class="text-danger"
+                     *ngIf="formGroup.get('price').hasError(validation.type) && (formGroup.get('price').touched || formGroup.get('price').pristine)">
+                {{validation.message}}</small>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-4">
+            <label for="quantity" class="col-form-label">Số lượng mũi tiêm<span class="text-danger">*</span>: </label>
+          </div>
+          <div class="col-8">
+            <input id="quantity" class="form-control mr-2" formControlName="quantity" type="text"
+                   placeholder="Nhập số lượng mũi tiêm">
+            <div class="error-place" *ngFor="let validation of validate_message.price">
+              <small class="text-danger"
+                     *ngIf="formGroup.get('quantity').hasError(validation.type) && (formGroup.get('price').touched || formGroup.get('price').pristine)">
+                {{validation.message}}</small>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-end">
+          <div>
+            <button class="btn btn-primary mr-3">Sửa</button>
+
+            <a class="btn btn-dark" routerLink="/vaccine-transaction-list" (click)="getMessageCancel()">Hủy</a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

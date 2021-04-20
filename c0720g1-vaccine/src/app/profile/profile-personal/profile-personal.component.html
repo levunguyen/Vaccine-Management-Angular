@@ -1,0 +1,68 @@
+<div>
+  <div class="row px-0 mx-0">
+    <div class="col-2 bg-dark px-0" style="height: 700px">
+      <a routerLink="/vaccination-by-request/list">
+        <div class="text-center text-dark" style="height: 25%; background: rgb(150,198,247)">
+          <div class="" style="position: relative; top: 30px">
+            <span style="font-size: 35px; margin-top: 50px"><i class="fa fa-syringe"></i></span>
+            <h4>Tiêm chủng yêu cầu</h4>
+            <p></p>
+          </div>
+        </div>
+      </a>
+      <a href="">
+        <div class="text-center text-dark" style="height: 25%; background: rgb(213,126,255)">
+          <div class="" style="position: relative; top: 30px">
+            <span style="font-size: 35px; margin-top: 50px"><i class="fa fa-syringe"></i></span>
+            <h4>Tiêm chủng định kỳ</h4>
+          </div>
+        </div>
+      </a>
+      <a href="">
+        <div class="text-center text-dark" style="height: 25%; background: rgb(202,111,255)">
+          <div class="" style="position: relative; top: 30px">
+            <span style="font-size: 35px; margin-top: 50px"><i class="fa fa-address-book"></i></span>
+            <h4>Sổ tiêm chủng</h4>
+          </div>
+        </div>
+      </a>
+      <a href="">
+        <div class="text-center text-dark" style="height: 25%; background: rgb(239,91,255)">
+          <div class="" style="position: relative; top: 30px">
+            <span style="font-size: 35px; margin-top: 50px"><i class="fa fa-user-cog"></i></span>
+            <h4>Thông tin cá nhân</h4>
+          </div>
+        </div>
+      </a>
+      <a href="">
+        <div class="text-center text-dark" style="height: 25%; background: rgb(181,88,205)">
+          <div class="" style="position: relative; top: 30px">
+            <span style="font-size: 35px; margin-top: 50px"><i class="fa fa-headset"></i></span>
+            <h4>Hỗ trợ khách hàng</h4>
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="col-10">
+      <h1 class="text-center mt-3 mb-4">Tổng hợp hồ sơ bệnh nhân</h1>
+      <div class="row justify-content-center mx-0">
+        <div class="row justify-content-start" style="margin-left: 250px">
+          <div *ngFor="let p of patientList" class="card col-8 col-sm-8 col-md-5 col-xl-3 px-0 mr-2 ml-2 mb-3"
+               style="width: 18rem;">
+          <span class="text-center text-success "
+                style="font-size: 50px; background-color: rgba(0,78,226,0.3); height: 150px"><i class="fa fa-user"
+                                                                                                style="margin-top: 50px"></i></span>
+            <div class="card-body">
+              <h5 class="card-title text-center"> {{p.name}} </h5>
+              <p class="card-text">Ngày sinh: {{p.dateOfBirth}}</p>
+              <p class="card-text">Giới tính: {{p.gender}}</p>
+              <p class="card-text">Địa chỉ: {{p.address}}</p>
+              <!--        <p class="card-text">Vắc-xin đã tiêm: RGA, PJA,...</p>-->
+              <a [routerLink]="'/vaccination-history/' + p.patientId" class="btn btn-primary">Xem hồ sơ chi tiết</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

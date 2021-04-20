@@ -1,0 +1,120 @@
+<div class="content" (click)="pageInput.value = ''">
+  <div class="container-fluid ">
+    <h1 class="text-center mt-4 mb-4">Danh Sách Các Giao Dịch Với Khách Hàng (Bệnh Nhân)</h1>
+
+    <div class="search row d-flex justify-content-center mb-4 text-center">
+      <div class="col-lg-4 col-md-3">
+        <br>
+        <button class="btn btn-success mt-2 mb-md-3" [routerLink]="['/vaccine-transaction-create']"><i class="fa fa-plus"></i> Thêm mới giao dịch</button>
+      </div>
+      <div class="col-xl-2 col-md-3">
+        <label>Tên Khách Hàng</label>
+        <input class="form-control" type="text" [(ngModel)]="keyword2" placeholder="Nhập Tên khách hàng">
+      </div>
+      <div class="col-xl-2 col-md-3">
+        <label>Loại vắc-xin</label>
+        <select [(ngModel)]="keyword3" class="form-control" name="">
+          <option value="">Mặc định</option>
+          <option *ngFor="let item of listVaccineType">{{item.name}}</option>
+        </select>
+      </div>
+      <div class="col-md-2 mt-2">
+        <br>
+        <button class="btn btn-success" (click)="search()"><i class="fa fa-search"> </i>Tìm kiếm</button>
+      </div>
+    </div>
+
+    <div class="">
+      <h3 class="text-danger text-center" *ngIf="vaccineTransaction.length == 0">Không có kết quả tìm thấy</h3>
+      <table style="" class="table table-hover table-striped table-bordered" *ngIf="vaccineTransaction.length > 0">
+        <thead>
+        <tr class="text-center bg-table-header" style="background-color:   rgb(158,207,251) !important;">
+          <th>STT</th>
+          <th>Mã giao dịch<br>khách hàng</th>
+          <th>Mã vắc-xin</th>
+          <th>Loại vắc-xin</th>
+          <th>Số lượng<br>vắc xin (mũi)</th>
+          <th>Mã bệnh nhân<br>(khách hàng)</th>
+          <th>Tên khách hàng<br>(bệnh nhân)</th>
+          <th>Ngày giao dịch</th>
+          <th>Giá<br>(VNĐ/mũi)</th>
+          <th>Thành tiền<br>(VNĐ/mũi)</th>
+          <th>Chức năng</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of vaccineTransaction,index as i">
+          <td>{{i + 1}}</td>
+          <td>GDK-{{item.vaccinationTransactionId}}</td>
+          <td>MVC-{{item.vaccinationHistory.vaccination.vaccine.vaccineId}}</td>
+          <td>{{item.vaccinationHistory.vaccination.vaccine.vaccineType.name}}</td>
+          <td style="text-align: right">{{item.quantity}}</td>
+          <td>MBN-{{item.vaccinationHistory.patient.patientId}}</td>
+          <td>{{item.vaccinationHistory.patient.name}}</td>
+          <td style="text-align: center">{{item.vaccinationHistory.vaccination.date | date:'dd/MM/yyyy' }}</td>
+          <td style="text-align: right" (change)="$event.target.value">{{item.price |currency: "VND"}}</td>
+          <td style="text-align: right">{{item.price*item.quantity| currency:"VND"}}</td>
+          <td style="text-align: center">
+            <button class="btn btn-primary" [routerLink]="['/vaccine-transaction-edit/'+item.vaccinationTransactionId]">
+              <i class="fa fa-edit"></i></button>
+            <button class="btn btn-danger ml-2" data-toggle="modal" data-target="#deleteModal"
+                    (click)="getContentDelete(item.vaccinationTransactionId,item.vaccinationHistory.patient.name)">
+              <i class="fa fa-trash"></i></button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination d-flex justify-content-md-end justify-content-center">
+          <li class="page-item"><a class="page-link" [hidden]="page==0" (click)="page =0;getList()">Đầu</a></li>
+          <li class="page-item"><a class="page-link" [hidden]="page==0" (click)="page =page - 1;getList()">Trang sau</a>
+          </li>
+          <li class="page-item col-md-1 col-2  px-0">
+            <div class="input-group">
+              <input #pageInput (change)="page= $event.target.value -1 " type="text"
+                     class="form-control text-right rounded-0" [placeholder]="page +1" aria-label="Username"
+                     aria-describedby="basic-addon1">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">/{{pageable.totalPages}}</span>
+              </div>
+            </div>
+          </li>
+          <li class="page-item">
+            <button class="btn btn-primary rounded-0">Đi</button>
+          </li>
+          <li class="page-item"><a class="page-link" [hidden]="page >= pageable.totalPages - 1"
+                                   (click)="page= page +1; getList()">Trang kế</a>
+          </li>
+          <li class="page-item"><a class="page-link"
+                                   [hidden]="page >= pageable.totalPages - 1 &&page<pageable.totalPages"
+                                   (click)="page= pageable.totalPages -1; getList()">Cuối</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Xóa giao dịch với khách hàng</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Bạn có muốn xóa thông tin giao dịch về bệnh nhân <span class="text-danger">{{patientName}}</span>?</p>
+        <p class="text-danger">Thông tin sau khi bị xoá sẽ không được khôi phục!!!</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="getMessageCancel()">Hủy</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="getMessageDelete(this.vaccineTransactionId)">Đồng ý
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

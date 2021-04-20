@@ -1,0 +1,134 @@
+<div class="container">
+  <div>
+    <h2 style="text-align: center">Quản Lý Kho Vắc-Xin</h2>
+  </div>
+  <div class="container-fluid">
+    <form [formGroup]="searchVaccine" (ngSubmit)="search()">
+      <div class=" search row d-flex justify-content-md-end mb-4 text-right float-right">
+        <!--                <div class="col-xl-2 col-12">-->
+        <!--                </div>-->
+        <div class="col-xl-2 col-md-3 form-group" style="text-align: center">
+          <label for="nameVaccine">Tên vắc-xin</label>
+          <input id="nameVaccine" class="form-control" type="text" formControlName="nameVaccine">
+        </div>
+        <div class="col-xl-2 col-md-3 form-group" style="text-align: right">
+          <div style="text-align: center">
+            <label for="typeVaccine">Loại Vắc-xin</label>
+          </div>
+          <div>
+            <input type="text" id="typeVaccine" class="form-control" formControlName="typeVaccine">
+          </div>
+        </div>
+        <div class="col-xl-2 col-md-3 form-group" style="text-align: right">
+          <div style="text-align: center">
+            <label for="provider">Nước Sản Xuất</label>
+          </div>
+          <div>
+            <input type="text" id="provider" class="form-control" formControlName="originVaccine">
+          </div>
+        </div>
+        <div class="col-xl-2 col-md-3 form-group" style="text-align: right">
+          <label for="status">Tình trạng vắc-xin</label>
+          <select id="status" class="form-control" formControlName="statusVaccine">
+            <option [value]="'con'">Còn</option>
+            <option [value]="'het'">Hết</option>
+          </select>
+        </div>
+        <div class="col-xl-2 col-4" style="text-align: right">
+          <br>
+          <button class="btn btn-success mt-xl-2"><i class="fa fa-search"></i>Tìm Kiếm</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="container mt-0">
+    <button class="btn btn-success mt-2 mb-md-3" routerLink="/vaccine-create"><i class="fa fa-plus"></i> Nhập Vắc-Xin
+    </button>
+  </div>
+
+
+  <div class="container tab">
+    <div style="text-align: center">
+      <h2>Danh Sách Vắc-Xin</h2>
+    </div>
+    <table class="table table-hover table-bordered">
+      <thead>
+      <tr class="bg-table-header">
+        <th scope="col">STT</th>
+        <th scope="col">Tên Vắc-Xin</th>
+        <th scope="col">Loại Vắc-Xin</th>
+        <th scope="col">Ngày Nhận</th>
+        <th scope="col">Số Giấy Phép</th>
+        <th scope="col">Nước SX</th>
+        <th scope="col">Hàm Lượng</th>
+        <th scope="col">Số Lượng</th>
+        <th scope="col">Hạn Sử Dụng</th>
+        <th scope="col">ĐK Bảo Quản</th>
+        <th scope="col">Tuổi Tiêm Chủng</th>
+        <th scope="col">Tình Trạng</th>
+        <th scope="col">Chức Năng</th>
+      </tr>
+      </thead>
+      <tbody style="font-size: 16px;text-align: center">
+      <tr *ngFor="let vaccine of vaccines,index as i">
+        <td>{{i + 1}}</td>
+        <td style="text-align: left">{{vaccine.name}}</td>
+        <td>{{vaccine.vaccineType}}</td>
+        <td>{{vaccine.dayReceive}}</td>
+        <td>{{vaccine.licenseCode}}</td>
+        <td>{{vaccine.origin}}</td>
+        <td>{{vaccine.dosage}}</td>
+        <td>{{vaccine.quantity}}</td>
+        <td>{{vaccine.expired}}</td>
+        <td>{{vaccine.maintenance}}</td>
+        <td>{{vaccine.age}}</td>
+        <td class="text-center">
+          <div *ngIf="vaccine.quantity === 0; else elseBlock">
+            <div style="color: red">
+              <label>Hết</label>
+            </div>
+          </div>
+          <ng-template #elseBlock>
+            <div style="color: green">
+              <label>Còn</label>
+            </div>
+          </ng-template>
+        </td>
+        <td>
+          <button class="btn btn-success" [disabled]="vaccine.quantity === 0"
+                  [routerLink]="['/import-and-export/' + vaccine.id ]">Xuất Kho
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!--    phân trang-->
+  <div class="mt-3">
+    <nav aria-label="Page navigation example">
+      <ul class="pagination d-flex justify-content-md-end justify-content-center">
+        <li class="page-item"><a class="page-link" (click)="firtPage()">Đầu</a></li>
+        <li class="page-item"><a class="page-link" (click)="prviousPage()">Trang trước</a></li>
+        <!--                    <li class="page-item active"><a class="page-link" href="#">1</a></li>-->
+        <li class="page-item col-md-1 col-2  px-0">
+          <!--                        <input class="form-control shadow-none rounded-0" type="text" placeholder="2/5">-->
+          <div class="input-group">
+            <input type="number" min="1" [max]="totalPagination" class="form-control text-right rounded-0"
+                   placeholder="2" aria-label="Username"
+                   aria-describedby="basic-addon1" [value]="indexPagination"
+                   (change)="indexPaginationChage($event.target.value)">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">{{totalPagination}}</span>
+            </div>
+          </div>
+        </li>
+        <li class="page-item">
+          <button class="btn btn-primary rounded-0" (click)="findPaginnation()">Đi</button>
+        </li>
+        <li class="page-item"><a class="page-link" (click)="nextPage()">Trang kế</a></li>
+        <li class="page-item"><a class="page-link" (click)="lastPage()">Cuối</a></li>
+      </ul>
+    </nav>
+  </div>
+</div>

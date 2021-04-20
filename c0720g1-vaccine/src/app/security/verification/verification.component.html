@@ -1,0 +1,39 @@
+<div class="container ">
+  <div class="row">
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+      <div *ngIf="isSendMail then send else not"></div>
+      <ng-template #send>
+        <h1>Kích hoạt tài khoản</h1>
+        <div *ngIf="isSuccessful then success else failed"></div>
+        <ng-template #success>
+          <div class="alert alert-success" role="alert">
+            Thành công: Tài khoản của bạn đã được kích hoạt
+          </div>
+          <a href="login" class="btn btn-lg btn-secondary">Quay về đăng nhập</a>
+        </ng-template>
+        <ng-template #failed>
+          <div class="alert alert-danger" role="alert">
+            Có lỗi xảy ra: Tài khoản của bạn đã được kích hoạt hoặc mã kích hoạt hết hạn, vui lòng kiểm tra lại hoặc
+            liên hệ bộ phận hỗ trợ để
+            được giúp đỡ
+          </div>
+          <a href=""routerLink="" class="btn btn-lg btn-secondary">Quay về trang chủ</a>
+          <a href="#" class="btn btn-lg btn-secondary ml-3">Liên hệ hỗ trợ</a>
+        </ng-template>
+      </ng-template>
+      <ng-template #not>
+        <h1>Kích hoạt tài khoản</h1>
+        <div class="alert alert-danger" role="alert">
+          <ul>
+            <li> Bạn cần kích hoạt tài khoản để tiếp tục sử dụng trang của chúng tôi!</li>
+            <li>Một email đã được gửi tới địa chỉ Email của bạn, hãy truy cập thư cá nhân và nhấn vào đường dẫn xác thực</li>
+            <li><span><h5>Lưu ý:</h5></span>nếu không tìm thấy hãy tìm trong mục <span> <h5>Thư rác/Spam</h5></span></li>
+          </ul>
+        </div>
+      </ng-template>
+
+
+    </div>
+  </div>
+</div>
+

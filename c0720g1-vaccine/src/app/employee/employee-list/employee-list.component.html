@@ -1,0 +1,115 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <h2 align="center">Trang quản lý nhân viên</h2>
+      <div class="search row d-flex justify-content-end mb-4 float-right">
+
+
+        <div class="col-xl-3 col-md-3">
+          <label>Mã nhân viên:</label>
+          <input id="myInput" (keyup.enter)="search()" (change)="idEmpSearch = $event.target.value" class="form-control" type="text" placeholder="Nhập mã NV">
+        </div>
+        <div class="col-xl-3 col-md-3">
+          <label>Họ và tên:</label>
+          <input (keyup.enter)="search()" (change)="name = $event.target.value" class="form-control " type="text" placeholder="Nhập tên NV">
+        </div>
+        <div class="form-group col-sm-3 col-md-3 col-lg-3">
+          <label>Chức vụ:</label>
+          <select (keyup.enter)="search()" (change)="positionSearch = $event.target.value" class="form-control">
+            <option value="">Chọn chức vụ</option>
+            <option *ngFor="let position of positionList" [value]="position.positionId">{{position.name}}</option>
+          </select>
+        </div>
+        <div class="col-xl-2 col-lg-2 width-search">
+          <br>
+          <button id="myBtn" (click)="search()" class="btn btn-success mt-xl-2" style="float: right; width: 120%">
+            <i class="fa fa-search"></i>
+            Tìm kiếm
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 mb-4" style="margin-top: -15px">
+      <a href="employee/create" class="btn btn-success">
+        <i class="fa fa-plus"></i>
+        Tạo mới nhân viên
+      </a>
+      <h2 class="text-center">Danh sách nhân viên</h2>
+    </div>
+
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div id="list">
+        <h1 class="text-center text-danger" *ngIf="employeeList.length == 0">Không tìm thấy dữ liệu</h1>
+        <table class="table table-hover table-striped table-bordered" style="font-size: 14px">
+          <thead style="background-color:rgb(158,207,251) !important;">
+          <tr>
+            <th style="text-align: right">STT</th>
+            <th width="8%">Mã NV
+            </th>
+            <th width="12%">Họ và tên</th>
+            <th style="text-align: right">Ngày sinh</th>
+            <th style="text-align: right">CMND</th>
+            <th width="12%">Địa chỉ</th>
+            <th width="13%" style="text-align: right">Số điện thoại</th>
+            <th>Chức vụ</th>
+            <th width="12%">Quyền truy cập</th>
+            <th class="text-center">Chức năng</th>
+
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let employee of employeeList| paginate: { itemsPerPage: 5, currentPage: p }, index as i">
+            <td style="text-align: right">{{i+1}}</td>
+            <td>{{getEmployeeCode(employee.employeeId, 3)}}</td>
+            <td>{{employee.name}}</td>
+            <td style="text-align: right">{{employee.dateOfBirth}}</td>
+            <td style="text-align: right">{{employee.idCard}}</td>
+            <td>{{employee.address}}</td>
+            <td style="text-align: right">{{employee.phone}}</td>
+            <td>{{employee.position}}</td>
+            <td>{{employee.account}}</td>
+            <td class="text-center" width="11%">
+              <a class="btn btn-success mr-1" [routerLink]="['/employee/edit-employee', employee.employeeId]"><i class="fa fa-edit"></i></a>
+              <button class="btn btn-danger ml-1" (click)="temp(employee.employeeId)" data-toggle="modal" data-target="#modelId"><i class="fa fa-trash"></i></button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+
+        <pagination-controls
+          previousLabel="Trước"
+          nextLabel="Sau"
+          class="float-right" (pageChange)="p = $event"></pagination-controls>
+
+        <!-- Modal -->
+        <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+             aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Xác nhận xóa nhân viên</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                Bạn có chắc muốn xóa nhân viên này?
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Quay lại</button>
+                <button type="submit" (click)="onDel()" data-dismiss="modal" class="btn btn-primary">Xóa</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

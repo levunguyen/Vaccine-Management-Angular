@@ -1,0 +1,57 @@
+//div .tab{
+//  overflow-x: scroll;
+//}
+.table{
+  height: 100px;
+}
+.width-search{
+  width: 400px;
+}
+
+.title-h2{
+  font-weight: bold;
+  margin-bottom: 50px;
+}
+.bg-table-header{
+  background-color:rgb(158,207,251) !important;
+}
+.with-button{
+  width: 90px;
+}
+//.history-injection{
+//  height: 300px;
+//  overflow-y: scroll;
+//  -ms-overflow-style: none;
+//  scrollbar-width: none;
+//}
+
+.with-button-close{
+  margin-top: 40px;
+  width: 100px;
+  float: left;
+}
+
+.header {
+  height: 80px;
+}
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  /*height: 80px;*/
+  z-index: 9;
+  background-color:rgb(158,207,251) !important;
+}
+.navbar .logo {
+  margin-right: 30px;
+}
+@media screen and (min-width: 320px) {
+  .map{
+    width: 350px;
+  }
+}
+@media screen and (min-width: 1280px) {
+  .map{
+    width: 650px;
+  }
+}

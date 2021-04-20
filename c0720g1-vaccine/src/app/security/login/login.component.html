@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+      <div class="card card-signin my-5">
+        <div class="card-body">
+          <h5 class="card-title text-isLoggedIncenter"> Đăng Nhập</h5>
+          <form class="form-signin" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+            <div class="form-label-group">
+              <!--                            <label for="inputEmail">Tên tài khoản:</label>-->
+              <input autofocus formControlName="username" type="text" id="inputEmail" class="form-control"
+                     placeholder="Tên tài khoản">
+            </div>
+
+            <div class="form-label-group">
+              <!--                            <label for="inputPassword">Mật khẩu:</label>-->
+              <input formControlName="password" type="password" id="inputPassword" class="form-control"
+                     placeholder="Mật khẩu"
+                     required>
+            </div>
+            <div class="custom-control custom-checkbox mb-3">
+              <input type="checkbox" class="custom-control-input" id="customCheck1" formControlName="remember_me">
+              <label class="custom-control-label" for="customCheck1">Ghi nhớ đăng nhập lần sau</label>
+            </div>
+            <div>
+              <p><a href="" routerLink="/reset-password" data-dismiss="modal">Quên mật khẩu ?</a></p>
+              <span>Bạn chưa có tài khoản? Đăng ký <a  routerLink="/register">tại đây</a></span>
+            </div>
+            <button class="btn btn-lg btn-primary text-uppercase" type="submit">Đăng nhập</button>
+            <button class="btn btn-lg btn-secondary text-uppercase" routerLink="" data-dismiss="modal" type="button">
+              Huỷ
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,136 @@
+<div class="container" (click)="pageInput.value = ''">
+  <div>
+    <h3 class="text-center mt-4 ">DANH SÁCH BỆNH NHÂN ĐĂNG KÝ TIÊM CHỦNG THEO ĐỊNH KỲ CỦA TRUNG TÂM</h3>
+    <div class="search row mb-4 mt-4 xl-12 ">
+      <div class="col-xl-2 mt-3">
+        <div class="search row d-flex justify-content-xl-end justify-content-center mb-4 text-center">
+        </div>
+      </div>
+      <div class="col-xl-10 mt-3">
+        <div class="search row d-flex justify-content-xl-end justify-content-center mb-4 text-center">
+          <div class="col-xl-4 col-md-3">
+            <form [formGroup]="formGroup">
+            <label>Họ Và Tên</label>
+            <input (keydown.enter)="page = 0;searchPeriodicVaccination()"  [(ngModel)]="name" class="form-control" type="text" placeholder="Họ Và Tên" formControlName="name">
+              <div class="text-danger" *ngFor="let validation of validation_messages.name">
+                <div class="error-message"
+                     *ngIf="formGroup.get('name').hasError(validation.type) && (formGroup.get('name').dirty)">
+                  {{validation.message}}</div>
+              </div>
+            </form>
+          </div>
+          <div class="col-xl-4 col-md-3">
+            <label>Tình trạng</label>
+            <select (keydown.enter)="page = 0;searchPeriodicVaccination()" [(ngModel)]="status" class="form-control">
+              <option value="">Chọn Tình Trạng</option>
+              <option value=false>Chưa tiêm</option>
+              <option value=true>Đã tiêm</option>
+            </select>
+          </div>
+          <div class="col-xl-auto col-4 mt-xl-4 mt-md-3 mt-2 d-xl-flex justify-content-xl-end">
+            <button class="btn btn-success mt-2" [disabled]="!formGroup.valid" (click)="page = 0;searchPeriodicVaccination()"><i
+              class="fa fa-search"></i> Tìm kiếm
+            </button>
+          </div>
+          <div class="col-xl-auto col-4 mt-xl-4 mt-md-3 mt-2 d-xl-flex justify-content-xl-end">
+            <button class="btn btn-warning mt-2"  (click)="page = 0;getListPeriodicVaccination()"><i
+              class="fa fa-undo"></i> Quay lại
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <h2 class="text-center" *ngIf="vaccinationHistoryList.length === 0" style="color: red">Không có dữ liệu để hiển thị ! Vui lòng quay lại sau!!!</h2>
+  <div class="table" *ngIf="vaccinationHistoryList.length > 0">
+    <table class="table table-hover table-striped table-bordered">
+      <thead style="background-color:rgb(158,207,251)">
+      <tr>
+        <th>STT</th>
+        <th>Mã bệnh nhân</th>
+        <th>Họ và tên</th>
+        <th>Ngày sinh</th>
+        <th>Giới tính</th>
+        <th>Người giám hộ</th>
+        <th>Số điện thoại</th>
+        <th>Địa chỉ</th>
+        <th>Tên vaccine</th>
+        <th>Mô tả</th>
+        <th>Mũi tiêm số</th>
+        <th>Ngày tiêm</th>
+        <th>Thời gian</th>
+        <th>Tình trạng</th>
+        <th>Trước khi khám</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let object of vaccinationHistoryList;let i = index">
+        <td>{{i + 1}}</td>
+        <td>BN-{{object.patient.patientId}}</td>
+        <td>{{object.patient.name}}</td>
+        <td>{{object.patient.dateOfBirth | date:"dd/MM/yyyy"}}</td>
+        <td>{{object.patient.gender}}</td>
+        <td>{{object.patient.guardian}}</td>
+        <td>{{object.patient.phone}}</td>
+        <td>{{object.patient.address}}</td>
+        <td>{{object.vaccination.vaccine.name}}</td>
+        <td>{{object.vaccination.description}}</td>
+        <td>{{object.vaccinationTimes}}</td>
+        <td>{{object.vaccination.date}}</td>
+        <td>{{object.vaccination.startTime | slice:0:5}} - {{object.vaccination.endTime| slice:0:5}}</td>
+        <td class="text-center">
+          <div *ngIf="object.vaccination.status === true then logged else notLogged"></div>
+          <ng-template #logged>
+            <span class="badge badge-primary">Đã tiêm</span>
+          </ng-template>
+          <ng-template #notLogged>
+            <span class="badge badge-danger">Chưa tiêm</span>
+          </ng-template>
+        </td>
+        <td>
+          <button class="btn btn-primary" [routerLink]="['/registered-required-vaccination/view',object.patient.patientId, object.vaccinationHistoryId]" [disabled]="object.vaccination.status">Kiểm Tra</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination d-flex justify-content-md-end justify-content-center">
+        <li class="page-item">
+          <button class="page-link" [hidden]="page == 0" (click)="page = 0; searchPeriodicVaccination()">Đầu</button>
+        </li>
+        <li class="page-item">
+          <button class="page-link" [hidden]="page == 0" (click)="page = page - 1; searchPeriodicVaccination()">Trang
+            sau
+          </button>
+        </li>
+        <!--                    <li class="page-item active"><a class="page-link" href="#">1</a></li>-->
+        <li class="page-item col-md-1 col-2  px-0">
+          <!--                        <input class="form-control shadow-none rounded-0" type="text" placeholder="2/5">-->
+          <div class="input-group">
+            <input #pageInput (change)="page = $event.target.value - 1" type="text"
+                   class="form-control text-right rounded-0" [placeholder]="page + 1" aria-label="Username"
+                   aria-describedby="basic-addon1">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id=""> /{{pageable.totalPages}}</span>
+            </div>
+          </div>
+        </li>
+        <li class="page-item">
+          <button (click)="searchPeriodicVaccination()" class="btn btn-primary rounded-0">Đi</button>
+        </li>
+        <li class="page-item">
+          <button class="page-link" [hidden]="page >=  pageable.totalPages - 1"
+                  (click)="page = page + 1; searchPeriodicVaccination()">Trang kế
+          </button>
+        </li>
+        <li class="page-item">
+          <button class="page-link" [hidden]="page >=  pageable.totalPages - 1 && page < pageable.totalPages"
+                  (click)="page = pageable.totalPages - 1; searchPeriodicVaccination()">Cuối
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>

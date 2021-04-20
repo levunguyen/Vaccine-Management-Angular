@@ -1,0 +1,117 @@
+<div class="row justify-content-center mx-0">
+  <div class="col-xl-4">
+    <div class="container">
+      <form [formGroup]="formGroup">
+        <h3 class="mb-4 text-center">Cập nhật thông tin bệnh nhân</h3>
+        <div class="row mb-3 mt-5 ">
+          <div class="col-3">
+            <label for="name" class="col-form-label">Họ và tên <span class="text-danger">*</span></label>
+          </div>
+          <div class="col-9">
+            <input id="name" class="form-control" formControlName="name" type="text"
+                   placeholder="Nhập họ và tên bệnh nhân">
+            <div class="text-danger" *ngFor="let validation of validation_messages.name">
+              <div class="error-message"
+                   *ngIf="formGroup.get('name').hasError(validation.type) && (formGroup.get('name').dirty || formGroup.get('name').touched)">
+                {{validation.message}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-3">
+            <label class="col-form-label">Giới tính <span class="text-danger">*</span></label>
+          </div>
+          <div class="col-8 row">
+            <div class="col-5">
+              <input class="mx-1" name="gender" id="nam" value="Nam" formControlName="gender" type="radio">
+              <label for="nam">Nam</label>
+            </div>
+            <div class="col-4">
+              <input class="mx-1" name="gender" id="nu" value="Nữ" type="radio" formControlName="gender">
+              <label for="nu">Nữ</label>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-3">
+            <label for="dateOfBirth" class="col-form-label">Ngày sinh <span class="text-danger">*</span></label>
+          </div>
+          <div class="col-9">
+            <input id="dateOfBirth" class="form-control" formControlName="dateOfBirth" type="date">
+            <div class="text-danger" *ngFor="let validation of validation_messages.dateOfBirth">
+              <div class="error-message"
+                   *ngIf="formGroup.get('dateOfBirth').hasError(validation.type) && (formGroup.get('dateOfBirth').dirty || formGroup.get('dateOfBirth').touched)">
+                {{validation.message}}</div>
+              <span *ngIf="formGroup.get('dateOfBirth').hasError('checkAge')">Tuổi từ 3 tháng đến 90 tuổi</span>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-3">
+            <label for="guardian" class="col-form-label">Người giám hộ </label>
+          </div>
+          <div class="col-9">
+            <input id="guardian" class="form-control" formControlName="guardian" type="text"
+                   placeholder="Nhập họ và tên người giám hộ">
+            <div class="text-danger" *ngFor="let validation of validation_messages.guardian">
+              <div class="error-message"
+                   *ngIf="formGroup.get('guardian').hasError(validation.type) && (formGroup.get('guardian').dirty || formGroup.get('guardian').touched)">
+                {{validation.message}}</div>
+            </div>
+            <div class="text-danger"
+                 *ngIf="formGroup.hasError('checkGuardian') && (formGroup.get('guardian').dirty || formGroup.get('guardian').touched)">
+              Dưới 18 tuổi phải có người giám hộ .</div>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-3">
+            <label for="address" class="col-form-label">Địa chỉ </label>
+          </div>
+          <div class="col-9">
+            <input id="address" class="form-control" formControlName="address" type="text" placeholder="Nhập địa chỉ">
+            <div class="text-danger" *ngFor="let validation of validation_messages.address">
+              <div class="error-message"
+                   *ngIf="formGroup.get('address').hasError(validation.type) && (formGroup.get('address').dirty || formGroup.get('address').touched)">
+                {{validation.message}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-3">
+            <label for="phoneNumber" class="col-form-label">Số điện thoại<span class="text-danger">*</span></label>
+          </div>
+          <div class="col-9">
+            <input id="phoneNumber" class="form-control" formControlName="phone" type="text"
+                   placeholder="Nhập số điện thoại">
+            <div class="text-danger" *ngFor="let validation of validation_messages.phone">
+              <div class="error-message"
+                   *ngIf="formGroup.get('phone').hasError(validation.type) && (formGroup.get('phone').dirty || formGroup.get('phone').touched)">
+                {{validation.message}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-3">
+            <label for="email" class="col-form-label">Email <span class="text-danger">*</span></label>
+          </div>
+          <div class="col-9">
+            <input id="email" class="form-control" formControlName="email" type="text" placeholder="Nhập Email">
+            <div class="text-danger" *ngFor="let validation of validation_messages.email">
+              <div class="error-message"
+                   *ngIf="formGroup.get('email').hasError(validation.type) && (formGroup.get('email').dirty || formGroup.get('email').touched)">
+                {{validation.message}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-end">
+          <div>
+            <button [disabled]="!formGroup.valid" style="margin-right: 20px" class="btn btn-primary"
+                    (click)="editPatient()">Sửa
+            </button>
+            <a routerLink="/patient/list" class="btn btn-dark">Hủy</a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+div.table{
+  overflow-x:scroll;
+}
+table{
+  height:100px;
+  width: 1940px;
+}
+.bg-table-header{
+  background-color:rgb(158,207,251) !important;
+}
+@media screen and (min-width: 320px) {
+  .map{
+    width: 350px;
+  }
+}
+@media screen and (min-width: 1280px) {
+  .map{
+    width: 650px;
+  }
+}
