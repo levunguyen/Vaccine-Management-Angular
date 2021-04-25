@@ -20,6 +20,8 @@ import {FormsModule} from "@angular/forms";
 import {ReactiveFormsModule} from "@angular/forms";
 import {PeriodicalVaccinationManagerModule} from "./periodical-vaccination-manager/periodical-vaccination-manager.module";
 import {ProfileModule} from "./profile/profile.module";
+import {AngularFireModule} from '@angular/fire';
+import {environment} from "../environments/environment";
 
 @NgModule({
   declarations: [
@@ -48,7 +50,8 @@ import {ProfileModule} from "./profile/profile.module";
     PeriodicalVaccinationModule,
     RegisteredForVaccinationModule,
     FormsModule,
-    ProfileModule
+    ProfileModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig)
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,7 +1,15 @@
 <div class="container">
   <h2 style="text-align: center;font-weight: bold">Thông Tin Vắc-Xin Nhập Kho</h2>
   <form [formGroup]="formCreateVaccine" (ngSubmit)="save()">
-    <div class="mt-5 row">
+    <div class="mt-5 row form-group">
+      <div class="col-2" style="font-weight: bold;font-size: 17px">
+        <label for="imgvac-xin" class="mr-3">Ảnh Vắc-Xin <span style="color: red">*</span></label>
+      </div>
+      <div class="col-10">
+        <input id="imgvac-xin" type="file" class="form-control-file" (change)="showPreview($event)">
+      </div>
+    </div>
+    <div class="row">
       <div class="col-6" style="font-weight: bold;font-size: 17px">
         <div class="form-group row mt-3">
           <div class="col-4">

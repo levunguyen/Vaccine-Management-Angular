@@ -1,9 +1,13 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {VaccineService} from "../vaccine.service";
 import {Router} from "@angular/router";
 import {AlertService} from "../alert.service";
 import {IVaccineDTO} from "../../entity/IVaccineDTO";
+import {UploadFileService} from "../../service/upload-file.service";
+import {AngularFireStorage} from '@angular/fire/storage';
+import {finalize} from "rxjs/operators";
+import {formatDate} from '@angular/common';
 
 @Component({
   selector: 'app-vaccine-create',
@@ -14,10 +18,12 @@ export class VaccineCreateComponent implements OnInit {
   formCreateVaccine: FormGroup;
   listVaccine: IVaccineDTO[] = [];
   flag: boolean = false;
+  selectedImage: any = null;
 
   constructor(private vaccineService: VaccineService,
               private router: Router,
-              private alertService: AlertService) {
+              private alertService: AlertService,
+              @Inject(AngularFireStorage) private storage: AngularFireStorage) {
   }
 
   validation_messages = {
@@ -73,6 +79,7 @@ export class VaccineCreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.formCreateVaccine = new FormGroup({
+      imgVaccine: new FormControl(''),
       nameVaccine: new FormControl('', [Validators.required,
         Validators.minLength(4)]),
       typeVaccine: new FormControl('', [Validators.required,
@@ -98,25 +105,32 @@ export class VaccineCreateComponent implements OnInit {
     });
   }
 
+  showPreview(event: any) {
+    this.selectedImage = event.target.files[0];
+  }
 
   save() {
-    this.vaccineService.getAllVaccineNotPagination().subscribe((data: IVaccineDTO[]) => {
-      this.listVaccine = data;
-      console.log(this.listVaccine);
-    });
-    for (let vaccine of this.listVaccine) {
-      if (vaccine.name == this.formCreateVaccine.value.nameVaccine) {
-        this.flag = true;
-        break;
-      }
-    }
-    if (this.flag == false) {
-      console.log(this.formCreateVaccine.value);
-      this.vaccineService.createVaccineDTO(this.formCreateVaccine.value).subscribe(() => {
-        this.router.navigateByUrl('vaccine-list').then(r => this.alertService.showMessage("Thêm mới thành công!"));
+    // upload image to firebase
+    // const nameImg = this.getCurrentDateTime();
+    const nameImg = this.getCurrentDateTime() + this.selectedImage.name;
+    const fileRef = this.storage.ref(nameImg);
+    this.storage.upload(nameImg, this.selectedImage).snapshotChanges().pipe(
+      finalize(() => {
+        fileRef.getDownloadURL().subscribe((url) => {
+
+          this.formCreateVaccine.patchValue({imgVaccine: url});
+
+          // Call API to create vaccine
+          this.vaccineService.createVaccineDTO(this.formCreateVaccine.value).subscribe(() => {
+            this.router.navigateByUrl('vaccine-list').then(r => this.alertService.showMessage("Thêm mới thành công!"));
+          })
+        });
       })
-    } else {
-       this.alertService.showMessageErrors("Trùng lặp vắc-xin");
-    }
+    ).subscribe();
   }
+
+  getCurrentDateTime(): string {
+    return formatDate(new Date(), 'dd-MM-yyyyhhmmssa', 'en-US');
+  }
+
 }
